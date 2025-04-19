@@ -1,7 +1,13 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from transformers import pipeline
+import os
 
+# Initialize Flask app
 app = Flask(__name__)
+
+# Enable CORS for all routes
+CORS(app)
 
 # Initialize emotion detection model from Hugging Face
 classifier = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions", return_all_scores=True)
@@ -36,6 +42,6 @@ def analyze():
     return jsonify(response)
 
 if __name__ == "__main__":
-    import os
+    # Get the port from environment variable (use 5000 if not found)
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
