@@ -8,7 +8,7 @@ function getEmotion() {
     document.getElementById("emotionDetails").innerHTML = "";
 
     // Update the URL to target the /analyze endpoint
-    fetch("https://emotion-tracker-1.onrender.com/analyse", {
+    fetch("https://emotion-tracker-1.onrender.com/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text })
