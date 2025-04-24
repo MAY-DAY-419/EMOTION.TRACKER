@@ -11,9 +11,18 @@
         <h1>Emotion Analyzer</h1>
         <textarea id="textInput" placeholder="Enter text here..."></textarea>
         <button onclick="getEmotion()">Analyze Emotion</button>
+
+        <!-- Loading and precaution elements -->
+        <div id="loading" style="display: none;">🔄 Analyzing emotions...</div>
+        <div id="precaution" style="display: none;">
+            ⚠️ This tool is for informational purposes only.
+        </div>
+
+        <!-- Results -->
         <p id="result"></p>
         <div id="emotionDetails"></div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
