@@ -6,12 +6,13 @@ import os
 # Initialize Flask app
 app = Flask(__name__)
 
-# Enable CORS for all routes
-CORS(app)
+# Enable CORS for your GitHub Pages frontend
+CORS(app, origins="https://may-day-419.github.io")
 
-# Initialize emotion detection model from Hugging Face
+# Initialize emotion detection model
 classifier = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions", return_all_scores=True)
 
+# Helper function to return creative response
 def emotion_response(emotion):
     responses = {
         "joy": "You're radiating sunshine! ☀️ Joy is in the air.",
@@ -25,6 +26,7 @@ def emotion_response(emotion):
     }
     return responses.get(emotion.lower(), "You're feeling something deep...")
 
+# Route to analyze emotion
 @app.route("/analyze", methods=["POST"])
 def analyze():
     data = request.get_json()
@@ -41,7 +43,7 @@ def analyze():
     }
     return jsonify(response)
 
+# Run app
 if __name__ == "__main__":
-    # Get the port from environment variable (use 5000 if not found)
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
