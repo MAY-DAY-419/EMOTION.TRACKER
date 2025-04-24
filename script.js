@@ -2,7 +2,7 @@ function getEmotion() {
     const text = document.getElementById("textInput").value;
 
     // Update the URL to target the /analyze endpoint
-    fetch("https://emotion-tracker-1.onrender.com/analyze", {
+    fetch("https://emotion-tracker-1.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text })
