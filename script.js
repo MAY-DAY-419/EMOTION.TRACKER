@@ -1,13 +1,13 @@
 function getEmotion() {
     const text = document.getElementById("textInput").value;
-    
-    // Show loading spinner and precaution message
+
+    // Show loading & precaution
     document.getElementById("loading").style.display = "block";
     document.getElementById("precaution").style.display = "block";
     document.getElementById("result").innerHTML = "";
     document.getElementById("emotionDetails").innerHTML = "";
 
-    // Update the URL to target the /analyze endpoint
+    // Send POST request
     fetch("https://emotion-tracker-1.onrender.com/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -15,36 +15,49 @@ function getEmotion() {
     })
     .then(response => response.json())
     .then(data => {
-        // Hide loading spinner
         document.getElementById("loading").style.display = "none";
+
+        const topEmotion = data.top_emotion;
+        const confidence = data.confidence;
+        const allEmotions = data.all_emotions;
 
         const result = document.getElementById("result");
         const emotionDetails = document.getElementById("emotionDetails");
 
-        // Get the top emotion and confidence
-        const topEmotion = data.top_emotion;
-        const confidence = data.confidence;
+        result.innerHTML = `Top Emotion: <strong>${topEmotion}</strong><br>Confidence: ${confidence}`;
 
-        result.innerHTML = `Top Emotion: <strong>${topEmotion}</strong> <br> Confidence: ${confidence}`;
-
-        // Set the color based on happiness (shades of pink)
-        let emotionColor = "#FFB6C1"; // Default to light pink
-        if (topEmotion.toLowerCase() === "happiness") {
-            emotionColor = "#FF69B4"; // Bright pink for joy
-        } else if (topEmotion.toLowerCase() === "sadness") {
-            emotionColor = "#D3A6B1"; // Light pink for sadness
+        // Color coding
+        let emotionColor = "#000";
+        switch (topEmotion.toLowerCase()) {
+            case "happiness":
+                emotionColor = "#FF69B4";
+                break;
+            case "sadness":
+                emotionColor = "#5D5C61";
+                break;
+            case "anger":
+                emotionColor = "#D9534F";
+                break;
+            case "fear":
+                emotionColor = "#6C757D";
+                break;
+            default:
+                emotionColor = "#333";
         }
 
-        // Style the result text with emotion color
         result.style.color = emotionColor;
 
-        // Detailed emotions (but we focus on the top emotion only)
-        emotionDetails.innerHTML = `<strong>All Emotions:</strong><br>${topEmotion}: ${data.all_emotions[topEmotion]}<br>`;
+        // Show all emotion confidence
+        let detailsHtml = "<strong>All Emotions:</strong><br>";
+        for (let [emotion, value] of Object.entries(allEmotions)) {
+            detailsHtml += `${emotion}: ${value}<br>`;
+        }
 
+        emotionDetails.innerHTML = detailsHtml;
     })
     .catch(error => {
-        console.error('Error:', error);
-        // Hide loading spinner on error
+        console.error("Error:", error);
         document.getElementById("loading").style.display = "none";
+        document.getElementById("result").innerHTML = "❌ Failed to analyze emotion.";
     });
 }
