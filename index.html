@@ -1,28 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emotion Analyzer</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emotion Detector</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Emotion Analyzer</h1>
-        <textarea id="textInput" placeholder="Enter text here..."></textarea>
-        <button onclick="getEmotion()">Analyze Emotion</button>
+  <h1>Emotion Detector</h1>
+  <textarea id="textInput" placeholder="Type something..." rows="4" cols="50"></textarea><br/>
+  <button onclick="getEmotion()">Analyze Emotion</button>
 
-        <!-- Loading and precaution elements -->
-        <div id="loading" style="display: none;">🔄 Analyzing emotions...</div>
-        <div id="precaution" style="display: none;">
-            ⚠️ This tool is for informational purposes only.
-        </div>
+  <p id="loading" style="display: none;">Analyzing...</p>
+  <p id="result"></p>
+  <div id="emotionDetails"></div>
 
-        <!-- Results -->
-        <p id="result"></p>
-        <div id="emotionDetails"></div>
-    </div>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
+
