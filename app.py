@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 
-# ✅ Replace with your GitHub Pages domain
+# Enable CORS for your GitHub Pages frontend
 CORS(app, origins=["https://may-day-419.github.io"], supports_credentials=True)
 
 # Emotion detection model
@@ -28,7 +28,7 @@ def emotion_response(emotion):
 @app.route("/analyze", methods=["POST", "OPTIONS"])
 def analyze():
     if request.method == "OPTIONS":
-        return '', 204  # Handle preflight
+        return '', 204  # Handle preflight (CORS pre-check)
 
     data = request.get_json()
     text = data.get("text", "")
