@@ -4,7 +4,7 @@ function getEmotion() {
   document.getElementById("result").innerHTML = "";
   document.getElementById("emotionDetails").innerHTML = "";
 
-  fetch("https://emotion-tracker-1.onrender.com/analyze", {
+  fetch("https://emotion-tracker-2kru.onrender.com/analyze", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
