@@ -3,16 +3,15 @@ from flask_cors import CORS
 from transformers import pipeline
 import os
 
-# Initialize Flask app
 app = Flask(__name__)
 
-# ✅ Enable CORS for your GitHub Pages frontend
+# ✅ Replace with your GitHub Pages domain
 CORS(app, origins=["https://may-day-419.github.io"], supports_credentials=True)
 
-# Load the emotion detection model
+# Emotion detection model
 classifier = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions", return_all_scores=True)
 
-# Response templates
+# Creative response function
 def emotion_response(emotion):
     responses = {
         "joy": "You're radiating sunshine! ☀️ Joy is in the air.",
@@ -26,32 +25,27 @@ def emotion_response(emotion):
     }
     return responses.get(emotion.lower(), "You're feeling something deep...")
 
-# Main API route
 @app.route("/analyze", methods=["POST", "OPTIONS"])
 def analyze():
-    # ✅ Handle CORS preflight
     if request.method == "OPTIONS":
-        return '', 204
+        return '', 204  # Handle preflight
 
     data = request.get_json()
     text = data.get("text", "")
     if not text:
-        return jsonify({"error": "Text input is required"}), 400
+        return jsonify({"error": "No text provided"}), 400
 
     results = classifier(text)[0]
     results.sort(key=lambda x: x['score'], reverse=True)
     top = results[0]
 
-    response = {
+    return jsonify({
         "top_emotion": top["label"],
         "confidence": round(top["score"], 4),
         "creative_text": emotion_response(top["label"]),
         "all_emotions": {r["label"]: round(r["score"], 4) for r in results}
-    }
-    return jsonify(response)
+    })
 
-# Run the server
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-
