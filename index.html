@@ -4,17 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Emotion Detector</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Emotion Detector</h1>
-  <textarea id="textInput" placeholder="Type something..." rows="4" cols="50"></textarea><br/>
-  <button onclick="getEmotion()">Analyze Emotion</button>
+  <div class="theme-toggle">
+    <span class="mode-label">🌗 Toggle Dark Mode</span>
+    <label class="switch">
+      <input type="checkbox" id="modeToggle" onchange="toggleTheme()">
+      <span class="slider"></span>
+    </label>
+  </div>
 
-  <p id="loading" style="display: none;">Analyzing...</p>
-  <p id="result"></p>
-  <div id="emotionDetails"></div>
+  <div class="container fade-in">
+    <h1>LET'S DETECT<br>WHAT YOU FEEL</h1>
+    <textarea id="textInput" placeholder="Share your thoughts, feelings, or a story... let's see what your words reveal ✨"></textarea><br/>
+    <button onclick="getEmotion()">Analyze Emotion</button>
+
+    <p id="loading" style="display: none;">Analyzing...</p>
+    <p id="result" class="fade-in-section"></p>
+    <div id="emotionDetails" class="fade-in-section"></div>
+  </div>
 
   <script src="script.js"></script>
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+    }
+  </script>
 </body>
 </html>
+
 
