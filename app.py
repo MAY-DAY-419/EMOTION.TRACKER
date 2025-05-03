@@ -6,7 +6,8 @@ import os
 app = Flask(__name__)
 
 # Enable CORS for your GitHub Pages frontend
-CORS(app, origins=["https://may-day-419.github.io"], supports_credentials=True)
+# CORS(app, origins=["https://may-day-419.github.io"], supports_credentials=True)
+CORS(app, origins=["https://may-day-419.github.io", "https://emotion-tracker-2kru.onrender.com"], supports_credentials=True)
 
 # Emotion detection model
 classifier = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions", return_all_scores=True)
@@ -25,6 +26,10 @@ def emotion_response(emotion):
     }
     return responses.get(emotion.lower(), "You're feeling something deep...")
 
+# @app.route("/analyze", methods=["POST", "OPTIONS"])
+# def analyze():
+#     if request.method == "OPTIONS":
+#         return '', 204  # Handle preflight (CORS pre-check)
 @app.route("/analyze", methods=["POST", "OPTIONS"])
 def analyze():
     if request.method == "OPTIONS":
